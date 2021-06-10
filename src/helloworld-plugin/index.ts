@@ -1,4 +1,4 @@
-import { InstancePlugin } from '../tools';
+import { InstancePlugin } from '../plugin';
 
 export default new InstancePlugin({
 	id: 'hello-world',

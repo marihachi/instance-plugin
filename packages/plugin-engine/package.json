@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "plugin-engine",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./built/index.js",
+  "types": "./built/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marihachi/instance-plugin.git"
+  },
+  "author": "Marihachi",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "14.14.x",
+    "typescript": "4.2.x"
+  },
+  "dependencies": {
+    "plugin-sdk": "^0.0.0"
+  },
+  "files": [
+    "built"
+  ]
+}

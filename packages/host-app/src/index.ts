@@ -1,5 +1,5 @@
-import { ContextImplement, Engine } from '../engine';
-import plugin from '../helloworld-plugin';
+import { ContextImplement, Engine } from 'plugin-engine';
+import helloworldPlugin from 'helloworld-plugin';
 
 const impl: ContextImplement = {
 	generateSetupCtx(p) {
@@ -15,7 +15,7 @@ const impl: ContextImplement = {
 };
 
 const engine = new Engine({ impl });
-engine.use(plugin);
+engine.use(helloworldPlugin);
 
 console.log('[engine] started.');
 engine.start()

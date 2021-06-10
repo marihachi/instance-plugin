@@ -1,4 +1,4 @@
-import { InstancePlugin, RunCtx, SetupCtx } from '../plugin';
+import { InstancePlugin, RunCtx, SetupCtx } from 'plugin-sdk';
 
 export type ContextImplement = {
 	generateRunCtx(plugin: InstancePlugin): RunCtx;

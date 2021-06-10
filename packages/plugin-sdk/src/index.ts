@@ -1,20 +1,20 @@
-export type SetupCtx = {
+export type SetupApi = {
 
 };
 
-export type RunCtx = {
+export type RunApi = {
 	showMessage(text: string): void;
 };
 
 export class InstancePlugin {
 	id: string;
-	setup: (ctx: SetupCtx) => void | Promise<void>;
-	run: (ctx: RunCtx) => void | Promise<void>;
+	setup: (ctx: SetupApi) => void | Promise<void>;
+	run: (ctx: RunApi) => void | Promise<void>;
 
 	constructor(info: {
 		id: string;
-		setup?: (ctx: SetupCtx) => void | Promise<void>;
-		run: (ctx: RunCtx) => void | Promise<void>;
+		setup?: (ctx: SetupApi) => void | Promise<void>;
+		run: (ctx: RunApi) => void | Promise<void>;
 	}) {
 		this.id = info.id;
 		this.setup = info.setup || (() => {});

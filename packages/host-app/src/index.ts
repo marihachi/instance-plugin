@@ -1,11 +1,11 @@
-import { ContextImplement, Engine } from 'plugin-engine';
+import { ApiImplement, Engine } from 'plugin-engine';
 import helloworldPlugin from 'helloworld-plugin';
 
-const impl: ContextImplement = {
-	generateSetupCtx(p) {
+const impl: ApiImplement = {
+	generateSetupApi(p) {
 		return {};
 	},
-	generateRunCtx(p) {
+	generateRunApi(p) {
 		return {
 			showMessage(text) {
 				console.log(`[${p.id}] message:`, text);
@@ -14,14 +14,20 @@ const impl: ContextImplement = {
 	}
 };
 
-const engine = new Engine({ impl });
-engine.use(helloworldPlugin);
+async function entry() {
+	const engine = new Engine({ impl });
+	engine.use(helloworldPlugin);
+	
+	console.log('setup plugins');
+	await engine.setup();
 
-console.log('[engine] started.');
-engine.start()
-.then(() => {
-	console.log('[engine] all finished.');
-})
+	console.log('run plugins');
+	await engine.run();
+
+	console.log('all finished');
+}
+
+entry()
 .catch(e => {
-	console.log('[engine error]', e);
+	console.log('error', e);
 });

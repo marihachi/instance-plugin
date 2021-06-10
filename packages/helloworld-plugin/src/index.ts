@@ -2,9 +2,9 @@ import { InstancePlugin } from 'plugin-sdk';
 
 export default new InstancePlugin({
 	id: 'hello-world',
-	setup(ctx) {
+	setup(api) {
 	},
-	run(ctx) {
-		ctx.showMessage('Hello world!');
+	run(api) {
+		api.showMessage('Hello world!');
 	}
 });

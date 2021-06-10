@@ -1,16 +1,16 @@
-import { InstancePlugin, RunCtx, SetupCtx } from 'plugin-sdk';
+import { InstancePlugin, RunApi, SetupApi } from 'plugin-sdk';
 
-export type ContextImplement = {
-	generateRunCtx(plugin: InstancePlugin): RunCtx;
-	generateSetupCtx(plugin: InstancePlugin): SetupCtx;
+export type ApiImplement = {
+	generateRunApi(plugin: InstancePlugin): RunApi;
+	generateSetupApi(plugin: InstancePlugin): SetupApi;
 };
 
 export class Engine {
-	impl: ContextImplement;
+	impl: ApiImplement;
 	plugins: InstancePlugin[];
 
 	constructor(props: {
-		impl: ContextImplement;
+		impl: ApiImplement;
 	}) {
 		this.impl = props.impl;
 		this.plugins = [];
@@ -20,16 +20,18 @@ export class Engine {
 		this.plugins.push(plugin);
 	}
 
-	async start() {
+	async setup() {
 		const setupPromises = this.plugins.map(p => {
-			const setupCtx = this.impl.generateSetupCtx(p);
-			return p.setup(setupCtx);
+			const setupApi = this.impl.generateSetupApi(p);
+			return p.setup(setupApi);
 		});
 		await Promise.all(setupPromises);
+	}
 
+	async run() {
 		const runPromises = this.plugins.map(p => {
-			const runCtx = this.impl.generateRunCtx(p);
-			return p.run(runCtx);
+			const runApi = this.impl.generateRunApi(p);
+			return p.run(runApi);
 		});
 		await Promise.all(runPromises);
 	}

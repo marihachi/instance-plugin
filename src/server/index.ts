@@ -1,7 +1,20 @@
-import { Engine } from '../tools';
+import { ContextImplement, Engine } from '../tools';
 import plugin from '../helloworld-plugin';
 
-const engine = new Engine();
+const impl: ContextImplement = {
+	generateSetupCtx(p) {
+		return {};
+	},
+	generateRunCtx(p) {
+		return {
+			showMessage(text) {
+				console.log(`[${p.id}] message:`, text);
+			}
+		};
+	}
+};
+
+const engine = new Engine({ impl });
 engine.use(plugin);
 
 console.log('[engine] started.');

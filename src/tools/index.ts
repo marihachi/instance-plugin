@@ -3,7 +3,7 @@ export type SetupCtx = {
 };
 
 export type RunCtx = {
-
+	showMessage(text: string): void;
 };
 
 export class InstancePlugin {
@@ -22,10 +22,19 @@ export class InstancePlugin {
 	}
 }
 
+export type ContextImplement = {
+	generateRunCtx(plugin: InstancePlugin): RunCtx;
+	generateSetupCtx(plugin: InstancePlugin): SetupCtx;
+};
+
 export class Engine {
+	impl: ContextImplement;
 	plugins: InstancePlugin[];
 
-	constructor() {
+	constructor(props: {
+		impl: ContextImplement;
+	}) {
+		this.impl = props.impl;
 		this.plugins = [];
 	}
 
@@ -35,13 +44,13 @@ export class Engine {
 
 	async start() {
 		const setupPromises = this.plugins.map(p => {
-			const setupCtx: SetupCtx = {};
+			const setupCtx = this.impl.generateSetupCtx(p);
 			return p.setup(setupCtx);
 		});
 		await Promise.all(setupPromises);
 
 		const runPromises = this.plugins.map(p => {
-			const runCtx: RunCtx = {};
+			const runCtx = this.impl.generateRunCtx(p);
 			return p.run(runCtx);
 		});
 		await Promise.all(runPromises);

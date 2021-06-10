@@ -1,9 +1,8 @@
-export type SetupApi = {
+import { RunApi, SetupApi } from './api';
 
-};
-
-export type RunApi = {
-	showMessage(text: string): void;
+export {
+	RunApi,
+	SetupApi
 };
 
 export class InstancePlugin {
